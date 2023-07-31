@@ -9,7 +9,7 @@ const schema_admin=new Schema({
 
 
 const schema_airport=new Schema({
-    name:{type:String,required:true,min:[3,"اسم المطار يجب أن لا يقل عن 3 أحرف"]}
+    name:{type:String,required:true,min:[3,"اسم المطار يجب أن لا يقل عن 3 أحرف"]},code:{type:String,required:true}
 })
 
 
