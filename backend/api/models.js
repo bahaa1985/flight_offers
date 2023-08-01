@@ -41,12 +41,11 @@ const schema_sales=new Schema({
     orderDate:{type:Date,required:true},price:{type:Number,required:true}
 })
 
-const admin=mongoose.model('Admin',schema_admin)
-const airport=mongoose.model('Airport',schema_airport)
-const agency=mongoose.model('Agency',schema_agency)
-const transporter=mongoose.model('Transporter',schema_transporter)
-const company=mongoose.model('Company',schema_company)
-const offer=mongoose.model('Offer',schema_offer)
-const sales=mongoose.model('Sales',schema_sales)
-const models=[admin,agency,company,airport,transporter,offer,sales]
-export default models
+export const admin=mongoose.model('Admin',schema_admin)
+export const airport=mongoose.model('Airport',schema_airport)
+export const agency=mongoose.model('Agency',schema_agency)
+export const transporter=mongoose.model('Transporter',schema_transporter)
+export const company=mongoose.model('Company',schema_company)
+export const offer=mongoose.model('Offer',schema_offer)
+export const sales=mongoose.model('Sales',schema_sales)
+// export const models=[admin,agency,company,airport,transporter,offer,sales]
