@@ -5,10 +5,11 @@ export async function getAirports(){ //get all airports
     // connection.collection("airport").find()
 }
 
-export async function insert_airport(){   //insert new airport
-    // connection.collection("airports").insertOne({name:'Sohag',code:'HMB'})    
+export async function insertAirport(name,code){   //insert new airport
+   const new_airport=models.airport.create({"name":name,"code":code})
+   return new_airport
 }
 
-export async function update_airport(airportId){ //update an airport
+export async function updateAirport(airportId){ //update an airport
     
 }
