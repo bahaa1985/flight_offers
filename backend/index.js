@@ -1,13 +1,13 @@
 
 import 'dotenv/config'
-import * as airports from './routes/airports.js'
+import airportRouter from './routes/airports.js'
 import mongoose from 'mongoose'
 import express from 'express'
 // import { airport } from './api/models.js'
 const app=express()
 const port=process.env.PORT
 const uri=process.env.CONNECTION
-const connection =mongoose.createConnection(uri)
+
 app.get('/',(req,res)=>{
     mongoose.connect(uri)
     .then(
@@ -22,21 +22,21 @@ app.get('/',(req,res)=>{
     )
 })
 
-app.use('/airports',airports.airport_router)
+app.use('/airports',airportRouter)
 
-app.get('/new_airport',(req,res)=>{
-    insert_airport(connection)
-    .then(
-        ()=>{
-            res.send("airport is inserted")
-        }
-    )
-    .catch(
-        (err)=>{
-            res.send(err)
-        }
-    )
-})
+// app.get('/new_airport',(req,res)=>{
+//     insert_airport(connection)
+//     .then(
+//         ()=>{
+//             res.send("airport is inserted")
+//         }
+//     )
+//     .catch(
+//         (err)=>{
+//             res.send(err)
+//         }
+//     )
+// })
 
 
 app.listen(port,()=>{

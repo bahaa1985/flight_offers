@@ -1,13 +1,14 @@
 import express from "express";
-import * as airport_model from '../admin/airport.js'
+import * as airports from '../controller/airport.js'
 import bodyParser from "body-parser";
-import mongoose, { MongooseError } from "mongoose";
+import  createhttpErrors  from "http-errors";
+import mongoose from "mongoose";
 const urlEncoded=bodyParser.urlencoded({extended:false})
 const airportRouter=express.Router();
 
 airportRouter.get('/',(req,res)=>{
     try{
-        airport_model.getAirports().then(
+        airports.getAirports().then(
          (data)=>{
              res.send(data) 
          }
@@ -17,27 +18,34 @@ airportRouter.get('/',(req,res)=>{
          res.status(500).send(error)
      }
 })
-.post('/newAirport',urlEncoded,(req,res)=>{    
+.post('/newAirport',urlEncoded,async (req,res)=>{    
     const name=req.body.name
     const code=req.body.code
-    // res.send(req.body)
-    airport_model.insertAirport(name,code).then(()=>{
+    console.log(req.body.name)
+    await airports.insertAirport(name,code).then(()=>{               
         res.status(200).send("Airport is created")
-        if(!name){
-            // throw createhttpErrors(400,) setup http-errors
-        }
     })
     .catch((error)=>{
-        res.status(500).send(error.message)
+        res.status(500).send("inserting failed:"+error.message)
+    })   
+})
+.get('/:airportId',(req,res)=>{
+    const id=req.params.airportId
+    airports.getAirport(id).then((data)=>{
+       res.send(data)
     })
-    // try {
-       
-    // } catch  {
-    //     // res.send()
-    //     // next(error)
-    //     throw Error
-    // }
-    // res.send("post new airport")
+    
+})
+.patch('/:airportId',urlEncoded,async (req,res)=>{
+    const airportId=req.params.airportId
+    const newName=req.body.name
+    const newCode=req.body.code 
+    await airports.updateAirport(airportId,newName,newCode).then(()=>{
+        res.status(200).send("Airport is updated")
+    })
+    .catch((error)=>{
+        res.status(500).send("updating failed:"+error.message)
+    })
 })
 
 export default airportRouter
