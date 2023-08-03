@@ -18,12 +18,6 @@ const schema_agency=new Schema({
     password:{type:String,required:true,min:[8,'كلمة المرور يجب أن لا تقل عن 8 أحرف مع رموز و أرقام']},email:{type:String,required:true},mobile:{type:String,required:true,min:[11,"رقم الموبايل يجب أن لا يقل عن 11 رقم"]}
 })
 
-
-const schema_transporter=new Schema({
-    name:{type:String,required:true,min:[6,"اسم الناقل لا يقل عن 3 أحرف"]},image:{type:Buffer}
-})
-
-
 const schema_company=new Schema({
     name:{type:String,required:true,min:[3,"اسم الشركة لا يقل عن 3 أحرف"]},username:{type:String,required:true,min:[6,"اسم الدخول لا يقل عن 6 أحرف"]},
     password:{type:String,required:true,min:[8,'كلمة المرور يجب أن لا تقل عن 8 أحرف مع رموز و أرقام']},email:{type:String,required:true},mobile:{type:String,required:true}
@@ -42,9 +36,8 @@ const schema_sales=new Schema({
 })
 
 export const admin=mongoose.model('Admin',schema_admin)
-export const airport=mongoose.model('Airport',schema_airport)
 export const agency=mongoose.model('Agency',schema_agency)
-export const transporter=mongoose.model('Transporter',schema_transporter)
+
 export const company=mongoose.model('Company',schema_company)
 export const offer=mongoose.model('Offer',schema_offer)
 export const sales=mongoose.model('Sales',schema_sales)
