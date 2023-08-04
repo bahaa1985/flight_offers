@@ -1,6 +1,7 @@
 
 import 'dotenv/config'
 import airportRouter from './routes/airports.js'
+import transporterRouter from './routes/transporter.js'
 import mongoose from 'mongoose'
 import express from 'express'
 // import { airport } from './api/models.js'
@@ -23,6 +24,8 @@ app.get('/',(req,res)=>{
 })
 
 app.use('/airports',airportRouter)
+
+app.use('/transporter',transporterRouter)
 
 // app.get('/new_airport',(req,res)=>{
 //     insert_airport(connection)
