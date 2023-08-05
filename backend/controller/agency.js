@@ -11,9 +11,9 @@ export async function getAgency(agencyId){
     return agency
 }
 
-export async function newAgency(name,username,email,mobile,password,suspend){
+export async function newAgency(name,username,email,mobile,password){
     const agency=new Agency({"name":name,"username":username,"email":email,
-        "password":password,"mobile":mobile,"suspend":suspend})
+        "password":password,"mobile":mobile})
     await agency.save()
 }
 
