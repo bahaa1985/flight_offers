@@ -18,7 +18,7 @@ airportRouter.get('/',(req,res)=>{
          res.status(500).send(error)
      }
 })
-.post('/newAirport',urlEncoded,async (req,res)=>{    
+.post('/new',urlEncoded,async (req,res)=>{    
     const name=req.body.name
     const code=req.body.code
     console.log(req.body.name)

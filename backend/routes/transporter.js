@@ -18,20 +18,18 @@ transporterRouter.get("/",(req,res)=>{
 .get("/:transporterId",(req,res)=>{
 
 })
-.post("/newTransporter",upload.single("image"),(req,res,next)=>{
-    console.log(req.file)
-    // next()
+.post("/new",urlEncoded,upload.single("image"),async (req,res,next)=>{
+        
     const name=req.body.name
-    const imagename=req.file.filename
-    // res.send(image.filename)
-    // next()
-    transporters.insertTransporter(name,imagename).then(
+    const image=req.file.path
+    console.log({"name":name,"path":req.file})   
+    await transporters.insertTransporter(name,image).then(
         ()=>{
-            res.status(200).send("Transporter is inserted")
+           return res.status(200).send("Transporter" + name +" is inserted")
         }
     )
     .catch((err)=>{
-        res.status(500).send(err.message)
+        return res.status(500).send(err.message)
     })
     next();
 })

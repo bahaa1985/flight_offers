@@ -25,7 +25,7 @@ app.get('/',(req,res)=>{
 
 app.use('/airports',airportRouter)
 
-app.use('/transporter',transporterRouter)
+app.use('/transporters',transporterRouter)
 
 // app.get('/new_airport',(req,res)=>{
 //     insert_airport(connection)
