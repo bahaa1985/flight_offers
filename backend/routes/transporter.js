@@ -23,7 +23,7 @@ transporterRouter.get("/",(req,res)=>{
     const name=req.body.name
     const image=req.file.path
     console.log({"name":name,"path":req.file})   
-    await transporters.insertTransporter(name,image).then(
+    await transporters.newTransporter(name,image).then(
         ()=>{
            return res.status(200).send("Transporter" + name +" is inserted")
         }

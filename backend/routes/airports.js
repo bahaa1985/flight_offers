@@ -22,7 +22,7 @@ airportRouter.get('/',(req,res)=>{
     const name=req.body.name
     const code=req.body.code
     console.log(req.body.name)
-    await airports.insertAirport(name,code).then(()=>{               
+    await airports.newAirport(name,code).then(()=>{               
         res.status(200).send("Airport is created")
     })
     .catch((error)=>{

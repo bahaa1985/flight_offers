@@ -1,4 +1,4 @@
-import mongoose, { Mongoose } from "mongoose";
+
 import { Airport } from "../models/airport.js"
 
 export async function getAirports(){ //get all airports
@@ -11,7 +11,7 @@ export async function getAirport(airportId){
     return airport
 }
 
-export async function insertAirport(name,code){   //insert new airport
+export async function newAirport(name,code){   //insert new airport
     const newAirport=new Airport({"name":name,"code":code}) 
     await newAirport.save()    
 }

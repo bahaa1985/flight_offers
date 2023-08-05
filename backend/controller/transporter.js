@@ -6,7 +6,7 @@ export async function getTransporters(){
     return transporters
 }
 
-export async function insertTransporter(name,image){
+export async function newTransporter(name,image){
     const transporter =new Transporter({"name":name,"image":image})
     await transporter.save();
 }
