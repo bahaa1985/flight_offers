@@ -5,6 +5,6 @@ const schema_user=new Schema({
     email:{type:String,required:true},mobile:{type:String,required:true,min:[11,"رقم الموبايل يجب أن لا يقل عن 11 رقم"]},suspend:{type:Boolean,default:false}
 })
 
-const User=model("users",schema_user)
+const User=model("User",schema_user)
 
 export default User
