@@ -15,7 +15,7 @@ export async function newTicket(companyId,offerId,passenger_name,passenger_mobil
     await new_ticket.save() 
 }
 
-export async function updateTicket(salesId,passenger_name,passenger_mobile){
-    const ticket=Ticket.findByIdAndUpdate(salesId,{"companyId":companyId,"offerId":offerId,"passenger_name":passenger_name,"passenger_mobile":passenger_mobile}).exec()
+export async function updateTicket(ticketId,passenger_name,passenger_mobile){
+    const ticket=Ticket.findByIdAndUpdate(ticketId,{"companyId":companyId,"offerId":offerId,"passenger_name":passenger_name,"passenger_mobile":passenger_mobile}).exec()
     await ticket
 }
