@@ -46,3 +46,17 @@ router.get('/',(req,res)=>{
         res.status(500).send(err.message)
     })
 })
+.patch('/change:ticketId',(req,res)=>{
+    const companyId=req.body.companyId
+    const offerId=req.body.offerId
+    const name=req.body.passenger_name
+    const mobile=req.body.passenger_mobile
+    const price=req.body.price
+    const ticket_type=req.body.ticket_type
+    tickets.changeTicket(companyId,offerId,name,mobile,price,ticket_type).then(()=>{
+        res.status(200).send("ticket is changed")
+    })
+    .catch((err)=>{
+        res.status(500).send(err.message)
+    })
+})

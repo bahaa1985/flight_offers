@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import  createhttpErrors  from "http-errors";
 import mongoose from "mongoose";
 const urlEncoded=bodyParser.urlencoded({extended:false})
+
 const airportRouter=express.Router();
 
 airportRouter.get('/',(req,res)=>{

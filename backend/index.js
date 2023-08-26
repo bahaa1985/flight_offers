@@ -15,7 +15,8 @@ app.get('/',(req,res)=>{
     mongoose.connect(URI)
     .then(
         ()=>{           
-            res.send("DB is connected!");                  
+            res.send("DB is connected!");   
+                           
         }
     ).catch(
         (err)=>{
