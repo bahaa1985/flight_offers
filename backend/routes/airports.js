@@ -9,11 +9,12 @@ const airportRouter=express.Router();
 
 airportRouter.get('/',(req,res)=>{
     try{
-        airports.getAirports().then(
-         (data)=>{
-             res.send(data) 
-         }
-        )         
+        airports.getAirports()
+        // .then(
+        //  (data)=>{
+        //     return (data) 
+        //  }
+        // )         
      }
      catch(error){
          res.status(500).send(error)
