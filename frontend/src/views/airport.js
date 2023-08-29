@@ -1,11 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {React} from 'react'
 import { useState,useEffect } from 'react'
+import Table from 'react-bootstrap/Table'
+import Button from 'react-bootstrap/Button'
 
 export default function Airport (){
 
     const [airports,setAirports]=useState([])
-
+    const [name,setName]=useState('')
+    const [code,setCode]=useState('')
+    
     useEffect(()=>{
             fetch('/airports', { method: "GET" })
             .then((result)=>{
@@ -20,15 +24,37 @@ export default function Airport (){
 
         return(
             <div>
-                <ul>
+                <Table striped bordered hover size="sm" variant='light' responsive dir='rtl'
+                data-id='id'
+                  >
+                    <tbody>
                     {
                         airports.map((airport,index)=>{
                             return(
-                                <li key="index">{airport.name}</li>            
+                                <tr key={index}>
+                                    <td onChange={()=>setName(airport.name)} contentEditable>                                    
+                                        {airport.name}
+                                    </td>
+                                    <td onChange={()=>setCode(airport.code)} contentEditable>
+                                       {airport.code}
+                                    </td>
+                                    <td>
+                                        <Button variant='success' onClick={()=>console.log(name+ ' ---- ' + code)}>
+                                            تعديل
+                                        </Button>
+                                    </td>
+                                    <td>
+                                        <Button variant='danger'>
+                                            حذف
+                                        </Button>
+                                    </td>
+                                </tr>                            
                             )
-                        })
+                        })               
                     }
-                </ul>                
+                    </tbody>
+                </Table>
+                
             </div>
         )
 }
