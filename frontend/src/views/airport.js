@@ -1,45 +1,43 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {React} from 'react'
-import { useState,useEffect } from 'react'
+import { React } from 'react'
+import { useState, useEffect } from 'react'
 import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
 
-export default function Airport (){
+export default function Airport() {
 
-    const [airports,setAirports]=useState([])
-    const [name,setName]=useState('')
-    const [code,setCode]=useState('')
-    
-    useEffect(()=>{
-            fetch('/airports', { method: "GET" })
-            .then((result)=>{
-                   result.json().then((data)=>{
-                        setAirports(data)
-                    })
-                }
+    const [airports, setAirports] = useState([])
+    const [name, setName] = useState('')
+    const [code, setCode] = useState('')
+
+    useEffect(() => {
+        fetch('/airports', { method: "GET" })
+            .then((result) => {
+                result.json().then((data) => {
+                    setAirports(data)
+                })
+            }
             )
-                 
-           }
-    ,[]);
 
-        return(
-            <div>
-                <Table striped bordered hover size="sm" variant='light' responsive dir='rtl'
-                data-id='id'
-                  >
-                    <tbody>
-                    {
-                        airports.map((airport,index)=>{
-                            return(
+    }
+        , []);
+      
+    return (
+        <div>
+            <Table striped bordered hover responsive size="sm" variant='light' dir='rtl'>
+                <tbody>
+                    {                       
+                        airports.map((airport, index) => {
+                            return (
                                 <tr key={index}>
-                                    <td onChange={()=>setName(airport.name)} contentEditable>                                    
+                                    <td  onChange={(e)=>console.log(e.target)} contentEditable>
                                         {airport.name}
                                     </td>
-                                    <td onChange={()=>setCode(airport.code)} contentEditable>
-                                       {airport.code}
+                                    <td>
+                                        {airport.code}
                                     </td>
                                     <td>
-                                        <Button variant='success' onClick={()=>console.log(name+ ' ---- ' + code)}>
+                                        <Button variant='success'>
                                             تعديل
                                         </Button>
                                     </td>
@@ -48,13 +46,14 @@ export default function Airport (){
                                             حذف
                                         </Button>
                                     </td>
-                                </tr>                            
+                                </tr>
                             )
-                        })               
+                        })
                     }
-                    </tbody>
-                </Table>
-                
-            </div>
-        )
+                </tbody>
+            </Table>
+           
+            <div>{name}</div>
+        </div>
+    )
 }
