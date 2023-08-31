@@ -1,4 +1,5 @@
 
+import { SchemaTypeOptions } from "mongoose"
 import { Airport } from "../models/airport.js"
 
 export async function getAirports(){ //get all airports
@@ -16,7 +17,7 @@ export async function newAirport(name,code){   //insert new airport
     await newAirport.save()    
 }
 
-export async function updateAirport(airportId,name,code){ //update an airport
-   await Airport.findByIdAndUpdate(airportId,{name:name,code:code});     
+export async function updateAirport(airportId,name,code){ //update an airport    
+   return await Airport.findByIdAndUpdate(airportId,{name:name,code:code}).exec();     
 }
 
