@@ -6,6 +6,7 @@ import { updateAirport } from '../fetching/airport'
 import Table from 'react-bootstrap/Table'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
 export default function Airport() {
 
@@ -55,21 +56,29 @@ export default function Airport() {
                     }
                 </tbody>
             </Table>
+
            <Modal 
                 show={show}
                 onHide={handleClose}
                 backdrop="static"
-                keyboard={false}
+                keyboard={false}                
             >
                 <Modal.Header closeButton>
                     <Modal.Title>تعديل مطار</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>                 
-                    <input type='text' name="airportName"  defaultValue={name} onChange={(e)=>setName(e.target.value)}></input>
-                    <input type='text' name="airportCode"  defaultValue={code} onChange={(e)=>setCode(e.target.value)}></input>
+                <Modal.Body>
+                    <Form onSubmit={()=>updateAirport(name,code,id)}>
+                        <Form.Group>
+                            <Form.Control type='text' defaultValue={name} onChange={(e)=>setName(e.target.value)} placeholder='أدخل اسم المطار' >
+                            </Form.Control>
+                            <Form.Control type='text' defaultValue={code} onChange={(e)=>setCode(e.target.value)} placeholder='أدخل كود المطار'>
+                            </Form.Control>
+                        </Form.Group> 
+                        <Button type='submit' variant='primary'>تأكيد</Button>                     
+                    </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant='primary' onClick={()=>updateAirport(name,code,id).then((data)=>{console.log(data)})}>تأكيد</Button>
+                   
                     <Button variant='secondary' onClick={()=>handleClose()}>الغاء</Button>
                 </Modal.Footer>
            </Modal>

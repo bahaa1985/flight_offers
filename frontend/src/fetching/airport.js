@@ -1,18 +1,16 @@
 export async function getAirports(){   
     const response=await fetch('/airports', { method: "GET" })
-    const result= response.json()
-    return result
+    return response.json()
 }
 
 export async function updateAirport(name,code,id){
-    const response= await fetch(`/airports/${id}`, 
+    
+    await fetch('/airports/'+id, 
     { 
     method: "PATCH" ,
-    headers:{
-        "Content-Type":"Application/json",
-    },    
+    headers:{      
+        "Content-Type":"application/json",
+    },      
     body:JSON.stringify({"name":name,"code":code})})
-    // console.log("response: ",response)
-    const result= response.json()    
-    return result
+    console.log("response:",id)            
 }
