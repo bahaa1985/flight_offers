@@ -67,14 +67,14 @@ export default function Airport() {
                     <Modal.Title>تعديل مطار</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={()=>updateAirport(name,code,id)}>
+                    <Form>
                         <Form.Group>
                             <Form.Control type='text' defaultValue={name} onChange={(e)=>setName(e.target.value)} placeholder='أدخل اسم المطار' >
                             </Form.Control>
                             <Form.Control type='text' defaultValue={code} onChange={(e)=>setCode(e.target.value)} placeholder='أدخل كود المطار'>
                             </Form.Control>
                         </Form.Group> 
-                        <Button type='submit' variant='primary'>تأكيد</Button>                     
+                        <Button type='submit' variant='primary' onClick={()=>updateAirport(name,code,id)}>تأكيد</Button>                     
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
