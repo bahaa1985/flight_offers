@@ -5,13 +5,14 @@ export async function getAirports(){
 
 export async function updateAirport(name,code,id){
     
-    const response=await fetch('/airports/'+id, 
+    await fetch('/airports/'+id, 
     { 
     method: "PATCH" ,
     headers:{      
-        "Content-Type":"application/json",
+        "Content-Type":"multipart/form-data",
     },      
-    body:JSON.stringify({name:name,code:code})})
-    console.log(response.json())
-    return response.json()
+    body:JSON.stringify({"name":name,"code":code})})
+    
+    // console.log("body react: ",response.body)
+    // return response.json()
 }

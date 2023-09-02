@@ -48,13 +48,13 @@ airportRouter.get('/',(req,res)=>{
     const airportId=req.params.airportId
     const newName=req.body.name
     const newCode=req.body.code 
-    console.log(req.body)
+    console.log("body express: ",req.body)
     await airports.updateAirport(airportId,newName,newCode).then((data)=>{
         res.status(200).send(data.toJSON())        
     })
     .catch((error)=>{
         res.status(500).send("updating failed:"+error.message)
-    })
+    })  
 })
 
 export default airportRouter

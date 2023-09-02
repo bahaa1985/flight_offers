@@ -2,7 +2,7 @@
 import { React } from 'react'
 import { useState, useEffect } from 'react'
 import { getAirports } from '../fetching/airport'
-import { updateAirport } from '../fetching/airport'
+import { updateAirport }  from '../fetching/airport'
 import Table from 'react-bootstrap/Table'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
@@ -67,14 +67,14 @@ export default function Airport() {
                     <Modal.Title>تعديل مطار</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form>
+                    <Form onSubmit={()=>updateAirport(name,code,id)} method='PATCH' >
                         <Form.Group>
-                            <Form.Control type='text' defaultValue={name} onChange={(e)=>setName(e.target.value)} placeholder='أدخل اسم المطار' >
+                            <Form.Control type='text' defaultValue={name} onChange={(e)=>setName(e.target.value)}  >
                             </Form.Control>
-                            <Form.Control type='text' defaultValue={code} onChange={(e)=>setCode(e.target.value)} placeholder='أدخل كود المطار'>
+                            <Form.Control type='text' defaultValue={code} onChange={(e)=>setCode(e.target.value)} >
                             </Form.Control>
                         </Form.Group> 
-                        <Button type='submit' variant='primary' onClick={()=>updateAirport(name,code,id)}>تأكيد</Button>                     
+                        <Button type='submit' variant='primary'>تأكيد</Button>                     
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
