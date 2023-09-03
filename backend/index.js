@@ -6,8 +6,12 @@ import userRouter from './routes/user.js'
 import offerRouter from './routes/offer.js'
 import mongoose from 'mongoose'
 import express from 'express'
+import bodyParser from "body-parser";
+const urlEncoded=bodyParser.urlencoded({extended:false})
 
 const app=express()
+app.use(urlEncoded)
+app.use(bodyParser.json())
 const PORT=process.env.PORT
 const URI=process.env.CONNECTION
 

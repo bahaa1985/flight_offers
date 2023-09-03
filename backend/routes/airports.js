@@ -7,26 +7,23 @@ const urlEncoded=bodyParser.urlencoded({extended:false})
 
 const airportRouter=express.Router();
 
+// airportRouter.use(urlEncoded)
+// airportRouter.use(bodyParser.json())
+
 airportRouter.get('/',(req,res)=>{
-    try{
-        // res.send(airports.getAirports())
+    try{        
         airports.getAirports().then((result)=>{
            res.send(result)
         })
         .catch((err)=>{
             throw err
-        })
-        // .then(
-        //  (data)=>{
-        //     return (data) 
-        //  }
-        // )         
+        })               
      }
      catch(error){
          res.status(500).send(error)
      }
 })
-.post('/new',urlEncoded,async (req,res)=>{    
+.post('/new',urlEncoded,bodyParser.json(),async (req,res)=>{    
     const name=req.body.name
     const code=req.body.code
     console.log(req.body.name)
@@ -44,7 +41,7 @@ airportRouter.get('/',(req,res)=>{
     })
     
 })
-.patch('/:airportId',urlEncoded,async (req,res)=>{
+.patch('/:airportId',urlEncoded,bodyParser.json(),async (req,res)=>{
     const airportId=req.params.airportId
     const newName=req.body.name
     const newCode=req.body.code 

@@ -18,6 +18,6 @@ export async function newAirport(name,code){   //insert new airport
 }
 
 export async function updateAirport(airportId,name,code){ //update an airport    
-   return await Airport.findByIdAndUpdate(airportId,{name:name,code:code}).exec().sa;     
+   return await Airport.findByIdAndUpdate(airportId,{name:name,code:code}).exec();     
 }
 

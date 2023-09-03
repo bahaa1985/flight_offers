@@ -2,11 +2,13 @@
 import { React } from 'react'
 import { useState, useEffect } from 'react'
 import { getAirports } from '../fetching/airport'
-import { updateAirport }  from '../fetching/airport'
+import { updateAirport } from '../fetching/airport'
 import Table from 'react-bootstrap/Table'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
+import {PlusLg} from "bootstrap-icons/icons"
+import "bootstrap/dist/css/bootstrap.min.css"
 
 export default function Airport() {
 
@@ -28,6 +30,11 @@ export default function Airport() {
 
     return (
         <div>
+            <Button className='info'>مطار جديد</Button>
+            
+            <PlusLg/>
+            
+            <br/>
             <Table striped bordered hover responsive size="sm" variant='light' dir='rtl'>
                 <tbody>
                     {                       
@@ -67,18 +74,17 @@ export default function Airport() {
                     <Modal.Title>تعديل مطار</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={()=>updateAirport(name,code,id)} method='PATCH' >
-                        <Form.Group>
-                            <Form.Control type='text' defaultValue={name} onChange={(e)=>setName(e.target.value)}  >
+                    <Form onSubmit={()=>updateAirport(name,code,id)} dir='rtl'>
+                        <Form.Group >
+                            <Form.Control className='mb-3' type='text' defaultValue={name} onChange={(e)=>setName(e.target.value)} >
                             </Form.Control>
                             <Form.Control type='text' defaultValue={code} onChange={(e)=>setCode(e.target.value)} >
                             </Form.Control>
-                        </Form.Group> 
-                        <Button type='submit' variant='primary'>تأكيد</Button>                     
+                        </Form.Group>                                          
                     </Form>
                 </Modal.Body>
-                <Modal.Footer>
-                   
+                <Modal.Footer dir='rtl'>
+                    <Button type='submit' variant='primary'>تأكيد</Button>   
                     <Button variant='secondary' onClick={()=>handleClose()}>الغاء</Button>
                 </Modal.Footer>
            </Modal>
