@@ -10,7 +10,7 @@ export async function updateAirport(name,code,id){
         "code":code
     }
 
-    const response= await fetch('/airports/'+id, 
+    await fetch('/airports/'+id, 
     { 
     method: "PATCH" ,
     headers:{      
