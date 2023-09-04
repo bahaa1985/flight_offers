@@ -1,41 +1,42 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { React } from 'react'
 import { useState, useEffect } from 'react'
 import { getAirports } from '../fetching/airport'
 import { updateAirport } from '../fetching/airport'
 import { newAirport } from '../fetching/airport'
 import { suspendAirport } from '../fetching/airport'
-import Table from 'react-bootstrap/Table'
-import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.bundle"
-import  "bootstrap-icons/font/bootstrap-icons.css"
+import "bootstrap-icons/font/bootstrap-icons.css"
 
 export default function Airport() {
 
     const [airports, setAirports] = useState([])
-    const [id,setId]=useState('')
+    const [id, setId] = useState('')
     const [name, setName] = useState('')
-    const [code, setCode] = useState('')    
-    const [newForm,setNewForm]=useState(false)
+    const [code, setCode] = useState('')
+    const [formStatus, setFormStatus] = useState('')
 
     useEffect(() => {
-        getAirports().then((data)=>{
+        getAirports().then((data) => {
             setAirports(data)
         })
-              
+
     }, []);
 
 
     return (
         <div className='container' dir='rtl'>
-            <button className='btn btn-primary m-3' data-bs-toggle='modal' data-bs-target='#myModal' onClick={()=>setNewForm(true)}>مطار جديد<i className="bi bi-plus-lg"></i></button>                                   
-           
+            <button
+                type='button'
+                className='btn btn-primary m-3'
+                onClick={() => [setFormStatus('new'), setName(''), setCode('')]}
+                data-bs-toggle='modal' data-bs-target='#myModal'>
+                مطار جديد<i className="bi bi-plus-lg"></i>
+            </button>
+
             <table className='table table-hover'>
                 <tbody>
-                {                       
+                    {
                         airports.map((airport, index) => {
                             return (
                                 <tr key={index}>
@@ -46,15 +47,16 @@ export default function Airport() {
                                         {airport.code}
                                     </td>
                                     <td>
-                                        <button type='button' className='btn btn-success' 
-                                            onClick={()=>[setName(airport.name),setCode(airport.code),setId(airport._id),setNewForm(false)]}
-                                            data-bs-toggle='modal' data-bs-target='#myModal'
-                                        >
+                                        <button type='button' className='btn btn-success'
+                                            onClick={() => [setFormStatus('update'), setName(airport.name), setCode(airport.code), setId(airport._id)]}
+                                            data-bs-toggle='modal' data-bs-target='#myModal'>
                                             تعديل
                                         </button>
                                     </td>
                                     <td>
-                                        <button type='button' className='btn btn-danger' onClick={()=>[setId(airport._id),suspendAirport(id,true)]}>
+                                        <button type='button' className='btn btn-danger'
+                                             onClick={() => [setFormStatus('delete'), setName(airport.name), setId(airport._id)]}
+                                            data-bs-toggle='modal' data-bs-target='#myModal'>
                                             حذف
                                         </button>
                                     </td>
@@ -64,36 +66,64 @@ export default function Airport() {
                     }
                 </tbody>
             </table>
-           
-           <div className='modal fade' id='myModal'>                    
-                    <div className='modal-dialog'>
-                        <div className='modal-content'>
-                            <div className='modal-header'>
-                            <button className='btn-close' data-bs-dismiss='modal'></button>   
-                                <h4 className='modal-title'>
-                                    {
-                                        newForm ? 'مطار جديد' : 'تعديل مطار'
-                                    }
-                                </h4>                                   
-                            </div>
-                            <div className='modal-body'>
-                                <form className='form' 
-                                    onSubmit={ ()=>newForm? newAirport(name,code) : updateAirport(name,code,id) } dir='rtl'>
-                                    <div className='m-2'>
-                                        <label for='airportName' className='form-label d-flex'>اسم المطار</label>
-                                        <input id='airportName' type='text' className='form-control mb-3' defaultValue={newForm ? '' :name} onChange={(e)=>setName(e.target.value)}/>
-                                        <label for='airportCode' className='form-label d-flex'>كود المطار</label>
-                                        <input id='airportCode' type='text' className='form-control mb-3' defaultValue={newForm ? '' :code} onChange={(e)=>setCode(e.target.value)}/>
-                                    </div>
-                                    <div className='m-3 d-flex justify-content-between'>
-                                        <button type='submit' className='btn btn-primary col-2 '>تأكيد</button>
-                                        <button type='button' className='btn btn-danger col-2' data-bs-dismiss='modal'>الغاء</button>
-                                    </div>
-                                </form>
-                            </div>
+
+            {/* bootstrap form within modal shown only when click new,update,delete buttons */}
+            <div className='modal fade' id='myModal' onSubmit={() => suspendAirport(id, true)}>
+                <div className='modal-dialog'>
+                    <div className='modal-content'>
+                        <div className='modal-header'>
+                            <button className='btn-close' data-bs-dismiss='modal'></button>
+                            <h4 className='modal-title'>
+                                {
+                                    formStatus === 'new' ? 'مطار جديد' :
+                                        formStatus === 'update' ? 'تعديل مطار' :
+                                            formStatus === 'delete' ? 'حذف مطار' : null
+                                }
+                            </h4>
                         </div>
+                        <div className='modal-body'>
+                            <form className='form'
+                                onSubmit={() => formStatus === 'new' ? newAirport(name, code) : 'update' ? updateAirport(name, code, id) : 'delete' ? suspendAirport(id, true) : null} dir='rtl'>
+                                {
+                                    formStatus === 'new' || formStatus === 'update' ?
+                                        <div className='m-2'>
+                                            <label htmlFor='airportName' className='form-label d-flex'>اسم المطار</label>
+                                            <input id='airportName' type='text' className='form-control mb-3'value={name} onChange={(e) => setName(e.target.value)} />
+                                            <label htmlFor='airportCode' className='form-label d-flex'>كود المطار</label>
+                                            <input id='airportCode' type='text' className='form-control mb-3' value={code} onChange={(e) => setCode(e.target.value)} />
+                                            <div className='m-3 d-flex justify-content-between'>
+                                                <button type='submit' className='btn btn-primary col-2'>تأكيد</button>
+                                                <button type='button' className='btn btn-secondary col-2' data-bs-dismiss='modal'>الغاء</button>
+                                            </div>
+                                        </div>
+                                        :
+                                        <div className='m-2'>
+                                            <h4>هل أنت متأكد من حذف مطار  {name}؟</h4>
+                                            <div className='m-3 d-flex justify-content-between'>
+                                                <button type='submit' className='btn btn-danger col-2'>تأكيد</button>
+                                                <button type='button' className='btn btn-secondary col-2' data-bs-dismiss='modal'>الغاء</button>
+                                            </div>
+                                        </div>
+                                }
+
+                            </form>
+
+
+
+                        </div>
+                        {/* {
+                                formStatus === 'delete' ?
+                                    <div className='modal-foot'>
+                                         <div className='m-3 d-flex justify-content-between'>
+                                            <button type='submit' className='btn btn-danger col-2 '>تأكيد</button>
+                                            <button type='button' className='btn btn-secondary col-2' data-bs-dismiss='modal'>الغاء</button>
+                                        </div>
+                                    </div>
+                                :null
+                            } */}
                     </div>
-           </div>                      
+                </div>
+            </div>
         </div>
     )
 }

@@ -10,7 +10,7 @@ export async function newAirport(name,code){
         "code":code
     }
     
-    const response= await fetch('/airports/new', 
+    await fetch('/airports/new', 
     { 
     method: "POST" ,
     headers:{      
