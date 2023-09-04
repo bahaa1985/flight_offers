@@ -7,9 +7,6 @@ const urlEncoded=bodyParser.urlencoded({extended:false})
 
 const airportRouter=express.Router();
 
-// airportRouter.use(urlEncoded)
-// airportRouter.use(bodyParser.json())
-
 airportRouter.get('/',(req,res)=>{
     try{        
         airports.getAirports().then((result)=>{
@@ -23,17 +20,6 @@ airportRouter.get('/',(req,res)=>{
          res.status(500).send(error)
      }
 })
-.post('/new',urlEncoded,bodyParser.json(),async (req,res)=>{    
-    const name=req.body.name
-    const code=req.body.code
-    console.log(req.body.name)
-    await airports.newAirport(name,code).then(()=>{               
-        res.status(200).send("Airport is created")
-    })
-    .catch((error)=>{
-        res.status(500).send("inserting failed:"+error.message)
-    })   
-})
 .get('/:airportId',(req,res)=>{
     const id=req.params.airportId
     airports.getAirport(id).then((data)=>{
@@ -41,11 +27,21 @@ airportRouter.get('/',(req,res)=>{
     })
     
 })
-.patch('/:airportId',urlEncoded,bodyParser.json(),async (req,res)=>{
+.post('/new',urlEncoded,bodyParser.json(),async (req,res)=>{    
+    const name=req.body.name
+    const code=req.body.code
+    console.log(req.body.name)
+    await airports.newAirport(name,code).then((data)=>{               
+        res.status(200).send(data.toJSON())
+    })
+    .catch((error)=>{
+        res.status(500).send("inserting failed:"+error.message)
+    })   
+})
+.patch('/update/:airportId',urlEncoded,bodyParser.json(),async (req,res)=>{
     const airportId=req.params.airportId
     const newName=req.body.name
-    const newCode=req.body.code 
-    console.log("body express: ",req.body)
+    const newCode=req.body.code    
     await airports.updateAirport(airportId,newName,newCode).then((data)=>{
         res.status(200).send(data.toJSON())        
     })
@@ -53,6 +49,15 @@ airportRouter.get('/',(req,res)=>{
         res.status(500).send("updating failed:"+error.message)
     })  
 })
-
+.patch('/suspend/:airportId',urlEncoded,bodyParser.json(),async (req,res)=>{
+    const airportId=req.params.airportId
+    const suspend=req.body.suspend
+    await airports.suspendAirport(airportId,suspend).then((data)=>{
+        res.status(200).send(data.toJSON())
+    })
+    .catch((error)=>{
+        res.status(500).send("Suspending failed:"+error.message)
+    })
+})
 export default airportRouter
 

@@ -13,11 +13,15 @@ export async function getAirport(airportId){
 }
 
 export async function newAirport(name,code){   //insert new airport
-    const newAirport=new Airport({"name":name,"code":code}) 
-    await newAirport.save()    
+    const newAirport=new Airport({name:name,code:code}) 
+    return await newAirport.save()    
 }
 
 export async function updateAirport(airportId,name,code){ //update an airport    
    return await Airport.findByIdAndUpdate(airportId,{name:name,code:code}).exec();     
 }
+
+export async function suspendAirport(airportId,suspend){ //update an airport    
+    return await Airport.findByIdAndUpdate(airportId,{suspend:suspend}).exec();     
+ }
 

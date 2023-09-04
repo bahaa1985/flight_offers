@@ -3,6 +3,8 @@ import { React } from 'react'
 import { useState, useEffect } from 'react'
 import { getAirports } from '../fetching/airport'
 import { updateAirport } from '../fetching/airport'
+import { newAirport } from '../fetching/airport'
+import { suspendAirport } from '../fetching/airport'
 import Table from 'react-bootstrap/Table'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
@@ -25,9 +27,7 @@ export default function Airport() {
         })
               
     }, []);
-    
-    // const handleClose=()=>setShow(false)
-    // const handleShow = () => setShow(true);
+
 
     return (
         <div className='container' dir='rtl'>
@@ -47,14 +47,14 @@ export default function Airport() {
                                     </td>
                                     <td>
                                         <button type='button' className='btn btn-success' 
-                                            onClick={()=>[setName(airport.name),setCode(airport.code),setId(airport._id)]}
+                                            onClick={()=>[setName(airport.name),setCode(airport.code),setId(airport._id),setNewForm(false)]}
                                             data-bs-toggle='modal' data-bs-target='#myModal'
                                         >
                                             تعديل
                                         </button>
                                     </td>
                                     <td>
-                                        <button type='button' className='btn btn-danger'>
+                                        <button type='button' className='btn btn-danger' onClick={()=>[setId(airport._id),suspendAirport(id,true)]}>
                                             حذف
                                         </button>
                                     </td>
@@ -65,10 +65,7 @@ export default function Airport() {
                 </tbody>
             </table>
            
-           <div className='modal fade' id='myModal'>
-                    {/* {
-                        document.getElementById('#myModal').hidden ? setNewForm(false) : setNewForm(true)
-                    } */}
+           <div className='modal fade' id='myModal'>                    
                     <div className='modal-dialog'>
                         <div className='modal-content'>
                             <div className='modal-header'>
@@ -81,13 +78,12 @@ export default function Airport() {
                             </div>
                             <div className='modal-body'>
                                 <form className='form' 
-                                    onSubmit={
-                                       !newForm? ()=>updateAirport(name,code,id):null
-                                    } dir='rtl'
-                                >
+                                    onSubmit={ ()=>newForm? newAirport(name,code) : updateAirport(name,code,id) } dir='rtl'>
                                     <div className='m-2'>
-                                        <input type='text' className='form-control mb-3' defaultValue={newForm ? '' :name} onChange={(e)=>setName(e.target.value)}/>
-                                        <input type='text' className='form-control mb-3' defaultValue={newForm ? '' :code} onChange={(e)=>setCode(e.target.value)}/>
+                                        <label for='airportName' className='form-label d-flex'>اسم المطار</label>
+                                        <input id='airportName' type='text' className='form-control mb-3' defaultValue={newForm ? '' :name} onChange={(e)=>setName(e.target.value)}/>
+                                        <label for='airportCode' className='form-label d-flex'>كود المطار</label>
+                                        <input id='airportCode' type='text' className='form-control mb-3' defaultValue={newForm ? '' :code} onChange={(e)=>setCode(e.target.value)}/>
                                     </div>
                                     <div className='m-3 d-flex justify-content-between'>
                                         <button type='submit' className='btn btn-primary col-2 '>تأكيد</button>
@@ -97,31 +93,7 @@ export default function Airport() {
                             </div>
                         </div>
                     </div>
-           </div>
-
-           {/* <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
-                <Modal.Header closeButton>
-                    <Modal.Title>تعديل مطار</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form onSubmit={()=>updateAirport(name,code,id)} dir='rtl'>
-                        <Form.Group className='mb-3'>
-                            <Form.Control className='mb-3' type='text' defaultValue={name} onChange={(e)=>setName(e.target.value)} >
-                            </Form.Control>
-                            <Form.Control type='text' defaultValue={code} onChange={(e)=>setCode(e.target.value)} >
-                            </Form.Control>
-                        </Form.Group>
-                        <Form.Group>
-                            <Button className='ml-2' type='submit' variant='primary'>تأكيد</Button>   
-                            <Button variant='secondary' onClick={()=>handleClose()}>الغاء</Button>
-                        </Form.Group>                                          
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer dir='rtl'>
-                   
-                </Modal.Footer>
-           </Modal> */}
-            <div>{id}</div>
+           </div>                      
         </div>
     )
 }
