@@ -83,12 +83,12 @@ export default function Airport() {
                         </div>
                         <div className='modal-body'>
                             <form className='form'
-                                onSubmit={() => formStatus === 'new' ? newAirport(name, code) : 'update' ? updateAirport(name, code, id) : 'delete' ? suspendAirport(id, true) : null} dir='rtl'>
+                                onSubmit={() => formStatus === 'new' ? newAirport(name, code) : formStatus === 'update' ? updateAirport(name, code, id) : formStatus === 'delete' ? suspendAirport(id, true) : null} dir='rtl'>
                                 {
                                     formStatus === 'new' || formStatus === 'update' ?
                                         <div className='m-2'>
                                             <label htmlFor='airportName' className='form-label d-flex'>اسم المطار</label>
-                                            <input id='airportName' type='text' className='form-control mb-3'value={name} onChange={(e) => setName(e.target.value)} />
+                                            <input id='airportName' type='text' className='form-control mb-3' value={name} onChange={(e) => setName(e.target.value)} />
                                             <label htmlFor='airportCode' className='form-label d-flex'>كود المطار</label>
                                             <input id='airportCode' type='text' className='form-control mb-3' value={code} onChange={(e) => setCode(e.target.value)} />
                                             <div className='m-3 d-flex justify-content-between'>
@@ -96,7 +96,7 @@ export default function Airport() {
                                                 <button type='button' className='btn btn-secondary col-2' data-bs-dismiss='modal'>الغاء</button>
                                             </div>
                                         </div>
-                                        :
+                                    :
                                         <div className='m-2'>
                                             <h4>هل أنت متأكد من حذف مطار  {name}؟</h4>
                                             <div className='m-3 d-flex justify-content-between'>
