@@ -1,9 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react'
-import { getAirports } from '../fetching/airport'
-import { updateAirport } from '../fetching/airport'
-import { newAirport } from '../fetching/airport'
-import { suspendAirport } from '../fetching/airport'
+import { getAirports, updateAirport,newAirport, suspendAirport } from '../fetching/airport'
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.bundle"
 import "bootstrap-icons/font/bootstrap-icons.css"
@@ -22,7 +19,6 @@ export default function Airport() {
         })
 
     }, []);
-
 
     return (
         <div className='container' dir='rtl'>
@@ -83,7 +79,9 @@ export default function Airport() {
                         </div>
                         <div className='modal-body'>
                             <form className='form'
-                                onSubmit={() => formStatus === 'new' ? newAirport(name, code) : formStatus === 'update' ? updateAirport(name, code, id) : formStatus === 'delete' ? suspendAirport(id, true) : null} dir='rtl'>
+                                onSubmit={() => formStatus === 'new' ? newAirport(name, code) 
+                                : formStatus === 'update' ? updateAirport(name, code, id) 
+                                : formStatus === 'delete' ? suspendAirport(id, true) : null} dir='rtl'>
                                 {
                                     formStatus === 'new' || formStatus === 'update' ?
                                         <div className='m-2'>
@@ -107,20 +105,7 @@ export default function Airport() {
                                 }
 
                             </form>
-
-
-
-                        </div>
-                        {/* {
-                                formStatus === 'delete' ?
-                                    <div className='modal-foot'>
-                                         <div className='m-3 d-flex justify-content-between'>
-                                            <button type='submit' className='btn btn-danger col-2 '>تأكيد</button>
-                                            <button type='button' className='btn btn-secondary col-2' data-bs-dismiss='modal'>الغاء</button>
-                                        </div>
-                                    </div>
-                                :null
-                            } */}
+                        </div>                       
                     </div>
                 </div>
             </div>

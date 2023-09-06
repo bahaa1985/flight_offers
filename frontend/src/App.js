@@ -5,8 +5,8 @@ import Registration from './views/registration';
 function App() {
   return (
     <div className="App">
-      {/* <Airport/> */}
-      <Registration/>
+      <Airport/>
+      {/* <Registration/> */}
     </div>
   );
 }

@@ -12,12 +12,13 @@ export async function newAirport(name,code){
     
     await fetch('/airports/new', 
     { 
-    method: "POST" ,
-    headers:{      
-        "Content-Type":"application/json",
-        "Accept": "*/*"
-    },      
-    body:JSON.stringify(body_data)})
+        method: "POST" ,
+        headers:{      
+            "Content-Type":"application/json",
+            "Accept": "*/*"
+        },      
+        body:JSON.stringify(body_data)
+    })
 
 }
 

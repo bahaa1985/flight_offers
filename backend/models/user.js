@@ -6,7 +6,7 @@ const schema_user=new Schema({
     email:{type:String,required:true},
     mobile:{type:String,required:true,min:[11,"رقم الموبايل يجب أن لا يقل عن 11 رقم"]},
     suspend:{type:Boolean,default:false},
-    user_type:{type:Types.ObjectId,ref:'User_Type',required:true}
+    user_type:{type:String,required:true}
 })
 
 const User=model("User",schema_user)

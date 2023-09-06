@@ -11,8 +11,9 @@ export async function getUser(userId){
     return user
 }
 
+
 export async function newUser(name,username,email,mobile,password,user_type){
-    const user=new User({"name":name,"username":username,"email":email,
+    const user=new User({"name":name,"username": username,"email":email,
         "password":password,"mobile":mobile,"user_type":user_type})
     await user.save()
 }
