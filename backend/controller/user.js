@@ -17,10 +17,10 @@ export async function newUser(name,email,mobile,password,user_type){
     await user.save()
 }
 
-export async function updateUser(userId,name,email,mobile,password){
-    await User.findByIdAndUpdate(userId,{"name":name,"email":email,"password":password,"mobile":mobile}).exec();
+export async function updateUser(userId,name,email,mobile,user_type){
+   return await User.findByIdAndUpdate(userId,{"name":name,"email":email,"mobile":mobile,"user_type":user_type}).exec();
 }
 
 export async function suspendUser(userId){
-    await User.findByIdAndUpdate(userId,{'suspend':true}).exec()   
+    return await User.findByIdAndUpdate(userId,{'suspend':true}).exec()   
 }
