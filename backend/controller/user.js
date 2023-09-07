@@ -1,8 +1,8 @@
 
-import User from "../models/user.js";
+import { User } from "../models/user.js";
 
 export async function getUsers (){
-    const users =User.find().exec()
+    const users =await User.find().exec()
     return users
 }
 
@@ -12,13 +12,15 @@ export async function getUser(userId){
 }
 
 
-export async function newUser(name,username,email,mobile,password,user_type){
-    const user=new User({"name":name,"username": username,"email":email,
-        "password":password,"mobile":mobile,"user_type":user_type})
+export async function newUser(name,email,mobile,password,user_type){
+    const user=new User({"name":name,"email":email,"password":password,"mobile":mobile,"user_type":user_type})
     await user.save()
 }
 
-export async function updateUser(userId,name,username,email,mobile,password,suspend){
-    const user=User.findByIdAndUpdate(userId,{"name":name,"username":username,"email":email,
-    "password":password,"mobile":mobile,"suspend":suspend}).exec();
+export async function updateUser(userId,name,email,mobile,password){
+    await User.findByIdAndUpdate(userId,{"name":name,"email":email,"password":password,"mobile":mobile}).exec();
+}
+
+export async function suspendUser(userId){
+    await User.findByIdAndUpdate(userId,{'suspend':true}).exec()   
 }

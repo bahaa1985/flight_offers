@@ -1,5 +1,4 @@
 
-import { SchemaTypeOptions } from "mongoose"
 import { Airport } from "../models/airport.js"
 
 export async function getAirports(){ //get all airports

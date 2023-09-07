@@ -10,14 +10,14 @@ const airportRouter=express.Router();
 airportRouter.get('/',(req,res)=>{
     try{        
         airports.getAirports().then((result)=>{
-           res.send(result)
+           res.status(200).send(result)
         })
         .catch((err)=>{
             throw err
         })               
      }
      catch(error){
-         res.status(500).send(error)
+         res.status(400).send(error)
      }
 })
 .get('/:airportId',(req,res)=>{
@@ -35,7 +35,7 @@ airportRouter.get('/',(req,res)=>{
         res.status(200).send(data.toJSON())
     })
     .catch((error)=>{
-        res.status(500).send("inserting failed:"+error.message)
+        res.status(400).send("inserting failed:"+error.message)
     })   
 })
 .patch('/update/:airportId',urlEncoded,bodyParser.json(),async (req,res)=>{
@@ -46,7 +46,7 @@ airportRouter.get('/',(req,res)=>{
         res.status(200).send(data.toJSON())        
     })
     .catch((error)=>{
-        res.status(500).send("updating failed:"+error.message)
+        res.status(400).send("updating failed:"+error.message)
     })  
 })
 .patch('/suspend/:airportId',urlEncoded,bodyParser.json(),async (req,res)=>{
@@ -56,7 +56,7 @@ airportRouter.get('/',(req,res)=>{
         res.status(200).send(data.toJSON())
     })
     .catch((error)=>{
-        res.status(500).send("Suspending failed:"+error.message)
+        res.status(400).send("Suspending failed:"+error.message)
     })
 })
 export default airportRouter

@@ -17,9 +17,8 @@ export default function Airport() {
         getAirports().then((data) => {
             setAirports(data)
         })
-
     }, []);
-
+    console.log('airports',airports)
     return (
         <div className='container' dir='rtl'>
             <button
@@ -30,7 +29,7 @@ export default function Airport() {
                 مطار جديد<i className="bi bi-plus-lg"></i>
             </button>
 
-            <table className='table table-hover'>
+            <table id="airportsTable" className='table table-hover'>
                 <tbody>
                     {
                         airports.map((airport, index) => {
