@@ -15,7 +15,7 @@ export async function updateUser(userId,name,email,mobile,user_type){
         "mobile":mobile,       
         "user_type":user_type
     }
-    await fetch('/update/'+userId, 
+    await fetch('users/update/'+userId, 
         { 
             method : 'PATCH',
             headers: {
@@ -23,14 +23,12 @@ export async function updateUser(userId,name,email,mobile,user_type){
                 'Accept':'*/*'
             },
             body: JSON.stringify(body_data)
-        }
-        )
+        })     
 }
 
-export async function newUser(name,username,email,mobile,password,user_type){
+export async function newUser(name,email,mobile,password,user_type){
     const body_data={
-        "name":name,
-        "username":username,
+        "name":name,    
         "email":email,
         "mobile":mobile,
         "password":password,
@@ -45,6 +43,5 @@ export async function newUser(name,username,email,mobile,password,user_type){
                 'Accept': '*/*'
             },
             body: JSON.stringify(body_data)
-        }
-    )
+        })        
 }

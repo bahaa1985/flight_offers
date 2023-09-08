@@ -33,8 +33,8 @@ userRouter.get("/",(req,res)=>{
     const password= hashedPass
     const mobile=req.body.mobile
     const user_type=req.body.user_type
-    user.newUser(name,email,mobile,password,user_type).then(()=>{
-        res.status(200).send("User " + name + " is inserted")
+    user.newUser(name,email,mobile,password,user_type).then((data)=>{
+        res.status(200).send(data.toJSON())
     })
     .catch((err)=>{
         res.status(400).send(err.message)
@@ -51,8 +51,9 @@ userRouter.get("/",(req,res)=>{
     // const password=hashedPass
     const mobile=req.body.mobile
     const user_type=req.body.user_type
-    user.updateUser(userId,name,email,mobile,user_type).then(()=>{
-        res.status(200).send("User " + name + " is updated")
+    user.updateUser(userId,name,email,mobile,user_type).then((data)=>{
+        res.status(200).send(data.toJSON())
+        console.log(req.body)
     })
     .catch((err)=>{
         res.status(400).send(err.message)
