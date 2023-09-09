@@ -84,25 +84,28 @@ export default function User(){
                             </h4>
                         </div>
                         <div className='modal-body'>
-                            <form   className="form" 
-                                    onSubmit={()=>
-                                    formState === 'new' ? newUser(name,email,mobile,password,userType) :
-                                    formState === 'update' ? updateUser (userId,name,email,mobile,userType)
-                                    : null
-                                    }
+                            <form   className="form"                           
+                                    method="POST"
+                                    // action="/users/new"
+                                    onSubmit={(e)=>
+                                    [e.preventDefault(),formState === 'new' ? newUser(name,email,mobile,password,userType) :
+                                    formState === 'update' ? 
+                                    updateUser (userId,name,email,mobile,userType)
+                                    .then((data)=>data)
+                                    : null]}
                             >
                                 {
                                     formState ==='update' ?  <label className="form-label" htmlFor="user_input">اسم المستخدم</label> : null
                                 }
-                                <input name="user_input" type="text" className="form-control mb-2" placeholder="اسم المستخدم" value={name} onChange={(e)=>setName(e.target.value)}/>                            
+                                <input  type="text" name="user_input" className="form-control mb-2" placeholder="اسم المستخدم" value={name} onChange={(e)=>setName(e.target.value)}/>                            
                                 {
                                     formState ==='update' ?   <label className="form-label" htmlFor="email_input">الايميل</label> : null
                                 }
-                                <input name="email_input" type="email" className="form-control mb-2" placeholder="الايميل" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+                                <input  type="email" name="user_email" className="form-control mb-2" placeholder="الايميل" value={email} onChange={(e)=>setEmail(e.target.value)}/>
                                 {
                                     formState  ==='update' ?   <label className="form-label" htmlFor="mobile_input">الموبايل</label> :null
                                 }
-                                <input name="mobile_input" type="text" className="form-control mb-2" maxLength={11} minLength={11} placeholder="الموبايل" value={mobile} onChange={(e)=>setMobile(e.target.value)}/>
+                                <input  type="text" className="form-control mb-2" maxLength={11} minLength={11} placeholder="الموبايل" value={mobile} onChange={(e)=>setMobile(e.target.value)}/>
                                 {
                                     formState==='new' ?                                        
                                         <Fragment>                                           
@@ -119,7 +122,8 @@ export default function User(){
                                     <option value="شركة">شركة</option>
                                 </select>
 
-                                <button type="submit" className="btn btn-primary">تسجيل</button>                                
+                                <button type="submit" className="btn btn-primary">تسجيل</button> 
+
                             </form>
                         </div>
                     </div>

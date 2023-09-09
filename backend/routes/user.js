@@ -23,7 +23,7 @@ userRouter.get("/",(req,res)=>{
         res.status(400).send(err.message)
     })
 })
-.post("/new",urlEncoded,(req,res)=>{
+.post("/new",urlEncoded,bodyParser.json(),async (req,res)=>{
     //generating hashed password:    
     const salt =bcrypt.genSaltSync(10)  
     const hashedPass=bcrypt.hashSync(req.body.password,salt)  
@@ -33,14 +33,14 @@ userRouter.get("/",(req,res)=>{
     const password= hashedPass
     const mobile=req.body.mobile
     const user_type=req.body.user_type
-    user.newUser(name,email,mobile,password,user_type).then((data)=>{
+    await user.newUser(name,email,mobile,password,user_type).then((data)=>{
         res.status(200).send(data.toJSON())
     })
     .catch((err)=>{
         res.status(400).send(err.message)
     })
 })
-.patch("/update/:userId",urlEncoded,(req,res)=>{
+.patch("/update/:userId",urlEncoded,bodyParser.json(),(req,res)=>{
      //generating hashed password:
     //  const salt=bcrypt.genSalt(10)
     //  const hashedPass=bcrypt.hashSync(req.body.password,salt)  

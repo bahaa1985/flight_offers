@@ -15,7 +15,7 @@ export async function updateUser(userId,name,email,mobile,user_type){
         "mobile":mobile,       
         "user_type":user_type
     }
-    await fetch('users/update/'+userId, 
+    await fetch('/users/update/'+userId, 
         { 
             method : 'PATCH',
             headers: {
@@ -36,12 +36,12 @@ export async function newUser(name,email,mobile,password,user_type){
     }
 
     await fetch('/users/new',
-        {
-            method: 'POST',
-            headers:{
-                'Content-Type':'application/json',
-                'Accept': '*/*'
-            },
-            body: JSON.stringify(body_data)
-        })        
+    {
+        method: 'POST',
+        headers:{
+            'Content-Type':'application/json',
+            'Accept': '*/*'
+        },
+        body: JSON.stringify(body_data)
+    })        
 }
