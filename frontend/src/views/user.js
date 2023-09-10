@@ -8,6 +8,7 @@ export default function User(){
 
     const [users,setUsers]=useState([])
     const [formState,setFormState]=useState('')
+    const [modalHidden,setModalHidden]=useState(true)
     const [userId,setuserId]=useState('')
     const [name,setName]=useState('')
     const [email,setEmail]=useState('')
@@ -21,7 +22,16 @@ export default function User(){
         })
     },[])
 
-    console.log('users',users)
+    function handleSubmit(e){        
+        e.preventDefault()
+        if(formState === 'new'){
+            newUser(name,email,mobile,password,userType)
+        } 
+        else if(formState === 'update'){
+             updateUser (userId,name,email,mobile,userType)
+        }        
+    }
+    // console.log('users',users)
     
     return(
         <div className="container" dir="rtl">
@@ -85,15 +95,9 @@ export default function User(){
                         </div>
                         <div className='modal-body'>
                             <form   className="form"                           
-                                    method="POST"
-                                    // action="/users/new"
-                                    onSubmit={(e)=>
-                                    [e.preventDefault(),formState === 'new' ? newUser(name,email,mobile,password,userType) :
-                                    formState === 'update' ? 
-                                    updateUser (userId,name,email,mobile,userType)
-                                    .then((data)=>data)
-                                    : null]}
-                            >
+                                    method={formState === 'new' ?  "post" : formState === 'update' ?  'patch' : null}
+                                    action={formState === 'new' ? '/users/new': formState==='update' ? `/users/update${userId}`:null}
+                                    onSubmit={(e)=>handleSubmit(e)}>
                                 {
                                     formState ==='update' ?  <label className="form-label" htmlFor="user_input">اسم المستخدم</label> : null
                                 }
