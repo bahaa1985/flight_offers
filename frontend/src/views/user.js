@@ -9,6 +9,7 @@ export default function User(){
 
     const [users,setUsers]=useState([])
     const [formState,setFormState]=useState('')
+    const [modalHidden,setModalHidden]=useState(true)
     const [userId,setuserId]=useState('')
     const [name,setName]=useState('')
     const [email,setEmail]=useState('')
