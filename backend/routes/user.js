@@ -37,7 +37,8 @@ userRouter.get("/",(req,res)=>{
         res.status(200).send(data.toJSON())
     })
     .catch((err)=>{
-        res.status(400).send(err.message)
+        res.send(err.message)
+        console.log("code:",res.statusCode);
     })
 })
 .patch("/update/:userId",urlEncoded,bodyParser.json(),(req,res)=>{

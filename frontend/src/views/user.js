@@ -3,6 +3,7 @@ import { getUsers , newUser, updateUser } from "../fetching/user";
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.bundle"
 import "bootstrap-icons/font/bootstrap-icons.css"
+import { Modal } from "bootstrap/dist/js/bootstrap.bundle";
 
 export default function User(){
 
@@ -14,6 +15,7 @@ export default function User(){
     const [mobile,setMobile]=useState('')   
     const [password,setPass]=useState('')
     const [userType,setUsertype] =useState('')
+    const [regState,setRegState]=useState(false)
     
     useEffect(()=>{
         getUsers().then((data)=>{
@@ -21,6 +23,25 @@ export default function User(){
         })
     },[])
 
+    function handleSubmit(e){
+        e.preventDefault();
+        if(formState==='new'){
+            newUser(name,email,mobile,password,userType).then((data)=>{
+                if(data){
+                    setName('');setEmail('');setMobile('');setPass('');setUsertype('')                   
+                }
+               
+            })
+        }
+        else if(formState==='update'){
+            updateUser(userId,name,email,mobile,userType).then((data)=>{
+                if(data){
+                   setName('');setEmail('');setMobile('');setPass('');setUsertype('')
+                }
+               
+            })
+        }
+    }
     console.log('users',users)
     
     return(
@@ -84,16 +105,10 @@ export default function User(){
                             </h4>
                         </div>
                         <div className='modal-body'>
-                            <form   className="form"                           
+                            <form   className="form was-validated"                           
                                     method="POST"
                                     // action="/users/new"
-                                    onSubmit={(e)=>
-                                    [e.preventDefault(),formState === 'new' ? newUser(name,email,mobile,password,userType) :
-                                    formState === 'update' ? 
-                                    updateUser (userId,name,email,mobile,userType)
-                                    .then((data)=>data)
-                                    : null]}
-                            >
+                                    onSubmit={(e)=>handleSubmit(e)}>
                                 {
                                     formState ==='update' ?  <label className="form-label" htmlFor="user_input">اسم المستخدم</label> : null
                                 }
@@ -109,15 +124,14 @@ export default function User(){
                                 {
                                     formState==='new' ?                                        
                                         <Fragment>                                           
-                                            <input type="password" className="form-control mb-2" placeholder="الباسوورد" onChange={(e)=>setPass(e.target.value)}/>
-                                            <input type="password" className="form-control mb-2" placeholder="تأكيد الباسوورد" onChange={(e)=>e.target.value}/>
+                                            <input type="password" className="form-control mb-2" placeholder="الباسوورد" minLength={6} onChange={(e)=>setPass(e.target.value)}/>
+                                            <input type="password" className="form-control mb-2" placeholder="تأكيد الباسوورد" minLength={6} onChange={(e)=>e.target.value}/>
                                         </Fragment>
                                     :null
                                 }
-                               
-                                <label className="form-label" htmlFor="select_input">نوع المستخدم</label>
-                                <select name="select_input" className="form-control mb-2" onChange={(e)=>setUsertype(e.target.value)} value={userType}>
-                                    <option value="ادمن">ادمن</option>
+                                                               
+                                <select name="select_input" className="form-select mb-2" onChange={(e)=>setUsertype(e.target.value)}>نوع المستخدم
+                                    <option value="ادمن" selected>ادمن</option>
                                     <option value="وكيل">وكيل</option>
                                     <option value="شركة">شركة</option>
                                 </select>

@@ -35,7 +35,7 @@ export async function newUser(name,email,mobile,password,user_type){
         "user_type":user_type
     }
 
-    await fetch('/users/new',
+    const response=await fetch('/users/new',
     {
         method: 'POST',
         headers:{
@@ -44,4 +44,5 @@ export async function newUser(name,email,mobile,password,user_type){
         },
         body: JSON.stringify(body_data)
     })        
+    return response.json()
 }
