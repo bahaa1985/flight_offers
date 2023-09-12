@@ -23,7 +23,7 @@ userRouter.get("/",(req,res)=>{
         res.status(400).send(err.message)
     })
 })
-.post("/new",urlEncoded,bodyParser.json(),async (req,res)=>{
+.post("/",urlEncoded,bodyParser.json(),async (req,res)=>{
     //generating hashed password: 
       
     const salt =bcrypt.genSaltSync(10)  
@@ -44,7 +44,7 @@ userRouter.get("/",(req,res)=>{
         console.log("code:",res.statusCode);
     })
 })
-.patch("/update/:userId",urlEncoded,bodyParser.json(),async (req,res)=>{
+.patch("/:userId",urlEncoded,bodyParser.json(),async (req,res)=>{
      //generating hashed password:
     //  const salt=bcrypt.genSalt(10)
     //  const hashedPass=bcrypt.hashSync(req.body.password,salt)  
