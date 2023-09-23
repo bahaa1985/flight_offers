@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { getUsers , newUser, updateUser } from "../fetching/user";
+import { username_isvalid,email_isvalid } from "./validation";
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.bundle"
 import "bootstrap-icons/font/bootstrap-icons.css"
@@ -25,42 +26,67 @@ export default function User(){
     },[])
    
 
-    // function handleSubmit(){
-    //     // console.log('event: ',event)
-    //     const myForm=document.getElementsByClassName('.needs-validation')[0]
-    //     myForm.addEventListener('submit',(event)=>{
-    //         // event.preventDefault();
-    //         // event.stopPropagation();
-    //         if(myForm.checkValidity()){            
-    //             console.log('valid!')
-    //             if(formState==='new'){
-    //                 newUser(name,email,mobile,password,userType).then((data)=>{
-    //                     if(data){
-    //                         setName('');setEmail('');setMobile('');setPass('');setUsertype('')                   
-    //                     }
+    function handleSubmit(){
+        // console.log('event: ',event)
+        const myForm=document.getElementsByClassName('form')[0]
+        myForm.addEventListener('submit',(event)=>{
+            if(!username_isvalid(name) || !email_isvalid(email)){
+                event.preventDefault();
+                event.stopPropagation();
+                myForm.classList.add('.needs-validation')
+            }
+            else{
+                myForm.classList.remove('.needs-validation')
+                if(formState==='new'){
+                    newUser(name,email,mobile,password,userType).then((data)=>{
+                        if(data){
+                            setName('');setEmail('');setMobile('');setPass('');setUsertype('')                   
+                        }                    
+                    })
+                }
+                else if(formState==='update'){
+                    updateUser(userId,name,email,mobile,userType).then((data)=>{
+                        if(data){
+                        setName('');setEmail('');setMobile('');setPass('');setUsertype('')
+                        getUsers().then((data)=>{
+                            setUsers(data)           
+                        })
+                        }
                     
-    //                 })
-    //             }
-    //             else if(formState==='update'){
-    //                 updateUser(userId,name,email,mobile,userType).then((data)=>{
-    //                     if(data){
-    //                     setName('');setEmail('');setMobile('');setPass('');setUsertype('')
-    //                     getUsers().then((data)=>{
-    //                         setUsers(data)           
-    //                     })
-    //                     }
+                    })
+                }
+            }
+          
+            // if(myForm.checkValidity()){            
+            //     console.log('valid!')
+            //     if(formState==='new'){
+            //         newUser(name,email,mobile,password,userType).then((data)=>{
+            //             if(data){
+            //                 setName('');setEmail('');setMobile('');setPass('');setUsertype('')                   
+            //             }
                     
-    //                 })
-    //             }
-    //         }
-    //         else{
-    //             event.preventDefault();
-    //             event.stopPropagation();
-    //             console.log('not valid!')
-    //         }
-    //     })
+            //         })
+            //     }
+            //     else if(formState==='update'){
+            //         updateUser(userId,name,email,mobile,userType).then((data)=>{
+            //             if(data){
+            //             setName('');setEmail('');setMobile('');setPass('');setUsertype('')
+            //             getUsers().then((data)=>{
+            //                 setUsers(data)           
+            //             })
+            //             }
+                    
+            //         })
+            //     }
+            // }
+            // else{
+            //     event.preventDefault();
+            //     event.stopPropagation();
+            //     console.log('not valid!')
+            // }
+        })
         
-    // }
+    }
     
     
     
@@ -111,6 +137,17 @@ export default function User(){
             </table>
 
             {/* bootstrap form within modal shown only when click new,update,delete buttons */}
+            <form className="form" onSubmit={()=>handleSubmit}>
+                    <div className="form-group">
+                        <input type="text" placeholder="اسم المستخدم" onChange={setName((e)=>e.target.value)} required/>
+                        <label className="invalid-feedback">اسم المستخدم يجب ألا يقل عن حرفين و ليس أكثر من 50 حرف</label>
+                    </div>
+                    <div className="form-group">
+                        <input type="email" placeholder="اسم المستخدم" onChange={setEmail((e)=>e.target.value)} required/>
+                        <label className="invalid-feedback">تأكد من كتابة الايميل بشكل صحيح</label>
+                    </div>
+            </form>
+        
                       
         </div>
     )
