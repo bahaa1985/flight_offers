@@ -27,7 +27,7 @@ export async function updateUser(userId,name,email,mobile,user_type){
 }
 
 export async function newUser(name,email,mobile,password,user_type){
-    try{
+   
     const body_data={
         "name":name,    
         "email":email,
@@ -45,10 +45,5 @@ export async function newUser(name,email,mobile,password,user_type){
         },
         body: JSON.stringify(body_data)
     })  
-    return response.json()
-}
-catch{
-    fetch('/users')
-}      
-    
+    return response.json()        
 }
