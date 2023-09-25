@@ -26,17 +26,17 @@ export default function User(){
     },[])
    
 
-    function handleSubmit(){
+    function handleSubmit(e){
         // console.log('event: ',event)
-        const myForm=document.getElementsByClassName('form')[0]
-        myForm.addEventListener('submit',(event)=>{
+        const myForm=document.getElementsByClassName('form')[0]        
+        // myForm.addEventListener('submit',(event)=>{
             if(!username_isvalid(name) || !email_isvalid(email)){
-                event.preventDefault();
-                event.stopPropagation();
-                myForm.classList.add('.needs-validation')
+                e.preventDefault();
+                e.stopPropagation();
+                myForm.classList.add('was-validated')
             }
             else{
-                myForm.classList.remove('.needs-validation')
+                myForm.classList.remove('was-validated')
                 if(formState==='new'){
                     newUser(name,email,mobile,password,userType).then((data)=>{
                         if(data){
@@ -57,34 +57,7 @@ export default function User(){
                 }
             }
           
-            // if(myForm.checkValidity()){            
-            //     console.log('valid!')
-            //     if(formState==='new'){
-            //         newUser(name,email,mobile,password,userType).then((data)=>{
-            //             if(data){
-            //                 setName('');setEmail('');setMobile('');setPass('');setUsertype('')                   
-            //             }
-                    
-            //         })
-            //     }
-            //     else if(formState==='update'){
-            //         updateUser(userId,name,email,mobile,userType).then((data)=>{
-            //             if(data){
-            //             setName('');setEmail('');setMobile('');setPass('');setUsertype('')
-            //             getUsers().then((data)=>{
-            //                 setUsers(data)           
-            //             })
-            //             }
-                    
-            //         })
-            //     }
-            // }
-            // else{
-            //     event.preventDefault();
-            //     event.stopPropagation();
-            //     console.log('not valid!')
-            // }
-        })
+        // })
         
     }
     
@@ -137,17 +110,36 @@ export default function User(){
             </table>
 
             {/* bootstrap form within modal shown only when click new,update,delete buttons */}
-            <form className="form" onSubmit={()=>handleSubmit}>
-                    <div className="form-group">
-                        <input type="text" placeholder="اسم المستخدم" onChange={setName((e)=>e.target.value)} required/>
-                        <label className="invalid-feedback">اسم المستخدم يجب ألا يقل عن حرفين و ليس أكثر من 50 حرف</label>
+            <div className="modal fade" id="myRegModal">
+                <div className="modal-dialog">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <button type="button" className="btn-close" data-bs-dismiss="#myRegModal"></button>
                     </div>
-                    <div className="form-group">
-                        <input type="email" placeholder="اسم المستخدم" onChange={setEmail((e)=>e.target.value)} required/>
-                        <label className="invalid-feedback">تأكد من كتابة الايميل بشكل صحيح</label>
+                    <div className="modal-body">
+                        <form id="regForm" className="form" onSubmit={(e)=>handleSubmit(e)} noValidate>
+                        <div className="form-group">
+                            <input type="text" placeholder="اسم المستخدم" onChange={(e)=>setName(e.target.value)} required/>
+                            <label className="invalid-feedback">اسم المستخدم يجب ألا يقل عن حرفين و ليس أكثر من 50 حرف</label>
+                        </div>
+                        <div className="form-group">
+                            <input type="email" placeholder="اسم المستخدم" onChange={(e)=>setEmail(e.target.value)} required/>
+                            <label className="invalid-feedback">تأكد من كتابة الايميل بشكل صحيح</label>
+                        </div> 
+                        <div>
+                        <button type="submit" formTarget="#regForm" className=" btn btn-primary form-btn">تسجيل</button>
+                            </div>                    
+                        </form>
                     </div>
-            </form>
-        
+                    <div class="modal-footer">
+                        <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                     
+                  </div>
+                </div>   
+                </div>
+                        
+            </div>
+                   
                       
         </div>
     )
