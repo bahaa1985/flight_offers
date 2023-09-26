@@ -28,8 +28,7 @@ export default function User(){
 
     function handleSubmit(e){
         // console.log('event: ',event)
-        const myForm=document.getElementsByClassName('form')[0]        
-        // myForm.addEventListener('submit',(event)=>{
+        const myForm=document.getElementsByClassName('form')[0]              
             if(!username_isvalid(name) || !email_isvalid(email)){
                 e.preventDefault();
                 e.stopPropagation();
@@ -114,16 +113,16 @@ export default function User(){
                 <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <button type="button" className="btn-close" data-bs-dismiss="#myRegModal"></button>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div className="modal-body">
                         <form id="regForm" className="form" onSubmit={(e)=>handleSubmit(e)} noValidate>
                         <div className="form-group">
-                            <input type="text" placeholder="اسم المستخدم" onChange={(e)=>setName(e.target.value)} required/>
+                            <input type="text" placeholder="اسم المستخدم" value={name} onChange={(e)=>setName(e.target.value)} required/>
                             <label className="invalid-feedback">اسم المستخدم يجب ألا يقل عن حرفين و ليس أكثر من 50 حرف</label>
                         </div>
                         <div className="form-group">
-                            <input type="email" placeholder="اسم المستخدم" onChange={(e)=>setEmail(e.target.value)} required/>
+                            <input type="email" placeholder="اسم المستخدم" value={email} onChange={(e)=>setEmail(e.target.value)} required/>
                             <label className="invalid-feedback">تأكد من كتابة الايميل بشكل صحيح</label>
                         </div> 
                         <div>
