@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { getUsers , newUser, updateUser } from "../fetching/user";
 import { username_isvalid,email_isvalid } from "./validation";
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -18,6 +18,7 @@ export default function User(){
     const [password,setPass]=useState('')
     const [userType,setUsertype] =useState('')
     const [disableBut,setDisableBut]=useState(true)
+    const [username_error_ref]=useRef()
     
     useEffect(()=>{
         getUsers().then((data)=>{
@@ -26,6 +27,10 @@ export default function User(){
     },[])
    
 
+    function check_username(){
+        if(!username_isvalid(name,username_error_ref)){          
+        }
+    }
     function handleSubmit(e){
         // console.log('event: ',event)
         const myForm=document.getElementsByClassName('form')[0]              
@@ -118,7 +123,7 @@ export default function User(){
                     <div className="modal-body">
                         <form id="regForm" className="form" onSubmit={(e)=>handleSubmit(e)} noValidate>
                         <div className="form-group">
-                            <input type="text" placeholder="اسم المستخدم" value={name} onChange={(e)=>setName(e.target.value)} required/>
+                            <input type="text" placeholder="اسم المستخدم" ref={username_error_ref} value={name} onChange={(e)=>setName(e.target.value)} required/>
                             <label className="invalid-feedback">اسم المستخدم يجب ألا يقل عن حرفين و ليس أكثر من 50 حرف</label>
                         </div>
                         <div className="form-group">
