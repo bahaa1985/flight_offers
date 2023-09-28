@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.bundle"
-export default function RegForm() {
+export default function RegForm(props) {
 
-    const [username,setUsername]=useState('')
-    const [username_validity,setUsername_validity]=useState(false)
-    const [Email_validity,setEmail_validity]=useState(false)
-    const [email,setEmail]=useState('')
-    const [username_error_ref,email_error_ref]=useRef()
+    const [username,setUsername]=useState(props.init_username)  
+    const [email,setEmail]=useState(props.init_email)
+    const username_error_ref=useRef()
+    const email_error_ref=useRef()
 
     function check_username(){
         if(username.length<2|| username.length>50){
@@ -28,10 +27,16 @@ export default function RegForm() {
         return true
     }
 
+    const myForm=document.getElementsByTagName('form')[0]
     function handleSubmit(e){
         if(!check_username || !check_email){
+            myForm.classList.add('was-validated')
             e.preventDefault()
         }
+        // else{
+        //     myForm.classList.remove('was-validated')
+        //     props.submitFunc();
+        // }
     }
     return (
         <div className="container">
