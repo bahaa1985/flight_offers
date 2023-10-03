@@ -142,19 +142,19 @@ export default function User() {
                             <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <div className="modal-body">
-                            <form onSubmit={handleSubmit}>
-                                <div className='form-group row'>
-                                    <label className="form-control" htmlFor="name">Name:</label>
-                                    <input className="form-control"
+                            <form onSubmit={handleSubmit} className="form">
+                                <div className='form-group text-start'>                                   
+                                    <label htmlFor="name">Name:</label>
+                                    <input className="form-control text-start"
                                         type="text"
                                         id="name"
                                         value={name}
                                         onChange={(event) => setName(event.target.value)}
-                                    />
+                                    />                                                                     
                                     {nameError && <span className="error">{nameError}</span>}
                                 </div>
-                                <div className='form-group row'>
-                                    <label className="form-control" htmlFor="email">Email:</label>
+                                <div className='form-group text-start'>
+                                    <label  htmlFor="email">Email:</label>
                                     <input className="form-control"
                                         type="email"
                                         id="email"
@@ -163,8 +163,18 @@ export default function User() {
                                     />
                                     {emailError && <span className="error">{emailError}</span>}
                                 </div>
-                                <div className='form-group'>
-                                    <label className="form-control" htmlFor="password">Password:</label>
+                                <div className='form-group text-start'>
+                                    <label  htmlFor="email">موبايل</label>
+                                    <input className="form-control"
+                                        type="text"
+                                        id="mobile"
+                                        value={mobile}
+                                        onChange={(event) => setMobile(event.target.value)}
+                                    />
+                                    {emailError && <span className="error">{emailError}</span>}
+                                </div>
+                                <div className='form-group text-start'>
+                                    <label  htmlFor="password">Password:</label>
                                     <input className="form-control"
                                         type="password"
                                         id="password"
@@ -173,8 +183,8 @@ export default function User() {
                                     />
                                     {passwordError && <span className="error">{passwordError}</span>}
                                 </div>
-                                <div className='form-group'>
-                                    <label className="form-control" htmlFor="confirmPassword">Confirm Password:</label>
+                                <div className='form-group text-start'>
+                                    <label  htmlFor="confirmPassword">Confirm Password:</label>
                                     <input className="form-control"
                                         type="password"
                                         id="confirmPassword"
