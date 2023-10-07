@@ -1,17 +1,14 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getUsers, newUser, updateUser } from "../fetching/user";
-import { username_isvalid, email_isvalid } from "./validation";
-import RegForm from "./reg_form";
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.bundle"
 import "bootstrap-icons/font/bootstrap-icons.css"
-import { Modal } from "bootstrap/dist/js/bootstrap.bundle";
+import "../styles/user.css"
 
 export default function User() {
 
     const [users, setUsers] = useState([])
     const [formState, setFormState] = useState('')
-    const [modalHidden, setModalHidden] = useState(true)
     const [userId, setuserId] = useState('')
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -24,8 +21,6 @@ export default function User() {
     const [passwordError, setPasswordError] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
     const [userType, setUsertype] = useState('')
-    const [disableBut, setDisableBut] = useState(true)
-    const username_error_ref = useRef()
 
     useEffect(() => {
         getUsers().then((data) => {
@@ -56,7 +51,17 @@ export default function User() {
         } else {
             setEmailError('');
         }
-
+        if(mobile.length<11){
+            setMobileError('Invalid mobile!')
+            isValid=false
+        }
+        else if(mobile.trim()===''){
+            setMobileError('Mobile number is required')
+            isValid=false
+        }
+        else{
+            setMobileError('')
+        }
         if (password.trim() === '') {
             setPasswordError('Password is required');
             isValid = false;
@@ -75,9 +80,14 @@ export default function User() {
         }
 
         // Submit the form if valid
-        if (isValid) {
+        if (nameError==='' && emailError==='' && mobileError==='' && passwordError==='' && confirmPasswordError==='') {
             // Perform form submission logic here
-            console.log('Form submitted successfully');
+            if(formState==='new'){
+                newUser(name,email,mobile,password,userType)
+            }
+            else if(formState==='update'){
+                updateUser(userId,name,email,mobile,userType)
+            }
         }
     };
 
@@ -143,7 +153,7 @@ export default function User() {
                         </div>
                         <div className="modal-body">
                             <form onSubmit={handleSubmit} className="form">
-                                <div className='form-group text-start'>                                   
+                                <div className='form-group row text-start'>                                   
                                     <label htmlFor="name">Name:</label>
                                     <input className="form-control text-start"
                                         type="text"
@@ -151,7 +161,7 @@ export default function User() {
                                         value={name}
                                         onChange={(event) => setName(event.target.value)}
                                     />                                                                     
-                                    {nameError && <span className="error">{nameError}</span>}
+                                    {nameError && <span className="error-feedback">{nameError}</span>}
                                 </div>
                                 <div className='form-group text-start'>
                                     <label  htmlFor="email">Email:</label>
@@ -161,17 +171,19 @@ export default function User() {
                                         value={email}
                                         onChange={(event) => setEmail(event.target.value)}
                                     />
-                                    {emailError && <span className="error">{emailError}</span>}
+                                    {emailError && <span className="error-feedback">{emailError}</span>}
                                 </div>
                                 <div className='form-group text-start'>
-                                    <label  htmlFor="email">موبايل</label>
+                                    <label  htmlFor="mobile">موبايل</label>
                                     <input className="form-control"
                                         type="text"
                                         id="mobile"
+                                        maxLength={11}
+                                        minLength={11}
                                         value={mobile}
                                         onChange={(event) => setMobile(event.target.value)}
                                     />
-                                    {emailError && <span className="error">{emailError}</span>}
+                                    {mobileError && <span className="error-feedback">{mobileError}</span>}
                                 </div>
                                 <div className='form-group text-start'>
                                     <label  htmlFor="password">Password:</label>
@@ -181,7 +193,7 @@ export default function User() {
                                         value={password}
                                         onChange={(event) => setPassword(event.target.value)}
                                     />
-                                    {passwordError && <span className="error">{passwordError}</span>}
+                                    {passwordError && <span className="error-feedback">{passwordError}</span>}
                                 </div>
                                 <div className='form-group text-start'>
                                     <label  htmlFor="confirmPassword">Confirm Password:</label>
@@ -192,14 +204,25 @@ export default function User() {
                                         onChange={(event) => setConfirmPassword(event.target.value)}
                                     />
                                     {confirmPasswordError && (
-                                        <span className="error">{confirmPasswordError}</span>
+                                        <span className="error-feedback">{confirmPasswordError}</span>
                                     )}
                                 </div>
+                                <div className="form-group">
+                                        <select className="form-select" defaultValue="ادمن">
+                                            <option value="ادمن">ادمن</option>
+                                            <option value="وكيل">وكيل</option>
+                                            <option value="شركة">شركة</option>
+                                        </select>
+                                </div>
+                                <div className="form-group d-flex justify-content-between">
                                 <button className="btn form-btn btn-primary" type="submit">تسجيل</button>
+                                <button type="button" className="btn form-btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                </div>
+                                
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            
 
                         </div>
                     </div>
